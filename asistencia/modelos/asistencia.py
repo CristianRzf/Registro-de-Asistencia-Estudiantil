@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Asistencia:
-    def init(self, id_estudiante, fecha, estado):
+    def __init__(self, id_estudiante, fecha, estado):
         self.id_estudiante = id_estudiante
         self.fecha = fecha
         self.estado = estado
@@ -12,7 +12,7 @@ class Asistencia:
             'fecha': self.fecha,
             'estado': self.estado
         }
-
+    @classmethod
     def from_dict(cls, data):
         return cls(data['id_estudiante'], data['fecha'], data['estado'])
 
