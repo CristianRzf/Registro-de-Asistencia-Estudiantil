@@ -75,58 +75,6 @@ class DatabaseManager:
                         )
                             )
                         ''')
-                           CREATE TABLE IF NOT EXISTS estudiantes
-                           (
-                               id_estudiante
-                               TEXT
-                               PRIMARY
-                               KEY,
-                               nombre
-                               TEXT
-                               NOT
-                               NULL,
-                               apellido
-                               TEXT
-                               NOT
-                               NULL
-                           )
-                           ''')
-
-            cursor.execute('''
-                           CREATE TABLE IF NOT EXISTS asistencias
-                           (
-                               id
-                               INTEGER
-                               PRIMARY
-                               KEY
-                               AUTOINCREMENT,
-                               id_estudiante
-                               TEXT
-                               NOT
-                               NULL,
-                               fecha
-                               TEXT
-                               NOT
-                               NULL,
-                               estado
-                               TEXT
-                               NOT
-                               NULL,
-                               FOREIGN
-                               KEY
-                           (
-                               id_estudiante
-                           ) REFERENCES estudantes
-                           (
-                               id_estudiante
-                           ),
-                               UNIQUE
-                           (
-                               id_estudiante,
-                               fecha
-                           )
-                               )
-                           ''')
 
             self.connection.commit()
             print("Tablas verificadas/creadas correctamente")
@@ -222,13 +170,6 @@ class DatabaseManager:
             return [], f"Error obteniendo asistencias: {e}"
 
     def limpiar_estudiantes(self):
-        try:
-            cursor = self.connection.cursor()
-
-            cursor.execute("DELETE FROM asistencias")
-
-    # === AGREGAR ESTE MÉTODO AQUÍ ===
-    def limpiar_estudiantes(self):
         """Elimina todos los estudiantes de la base de datos"""
         try:
             cursor = self.connection.cursor()
@@ -244,20 +185,21 @@ class DatabaseManager:
         except sqlite3.Error as e:
             return False, f"Error al limpiar estudiantes: {str(e)}"
 
-
+    # === NUEVO MÉTODO: ELIMINAR ESTUDIANTE ===
     def eliminar_estudiante(self, id_estudiante):
+        """Elimina un estudiante y todas sus asistencias"""
         try:
             cursor = self.connection.cursor()
 
-
+            # Primero eliminamos las asistencias del estudiante
             cursor.execute("DELETE FROM asistencias WHERE id_estudiante = ?", (id_estudiante,))
 
-
+            # Luego eliminamos el estudiante
             cursor.execute("DELETE FROM estudiantes WHERE id_estudiante = ?", (id_estudiante,))
 
             self.connection.commit()
 
-            
+            # Verificar si se eliminó algún estudiante
             if cursor.rowcount > 0:
                 return True, f"Estudiante {id_estudiante} eliminado correctamente"
             else:
