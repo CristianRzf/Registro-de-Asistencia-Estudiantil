@@ -22,6 +22,7 @@ class GeneradorReportes:
         
         return (presentes + tardes * 0.7) / len(asistencias_est) * 100
     
+    
     def generar_reporte_general(self):
         estudiantes, _ = self.db_manager.obtener_estudiantes()
         reporte = []
@@ -57,3 +58,4 @@ class GeneradorReportes:
                     'porcentaje': porcentaje
                 })
         return estudiantes_baja
+        

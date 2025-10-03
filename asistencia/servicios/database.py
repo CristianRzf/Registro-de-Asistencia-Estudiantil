@@ -23,6 +23,58 @@ class DatabaseManager:
             cursor = self.connection.cursor()
 
             cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS estudiantes
+                        (
+                            id_estudiante
+                            TEXT
+                            PRIMARY
+                            KEY,
+                            nombre
+                            TEXT
+                            NOT
+                            NULL,
+                            apellido
+                            TEXT
+                            NOT
+                            NULL
+                        )
+                        ''')
+
+            cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS asistencias
+                        (
+                            id
+                            INTEGER
+                            PRIMARY
+                            KEY
+                            AUTOINCREMENT,
+                            id_estudiante
+                            TEXT
+                            NOT
+                            NULL,
+                            fecha
+                            TEXT
+                            NOT
+                            NULL,
+                            estado
+                            TEXT
+                            NOT
+                            NULL,
+                            FOREIGN
+                            KEY
+                        (
+                            id_estudiante
+                        ) REFERENCES estudantes
+                        (
+                        id_estudiante
+                        ),
+                        UNIQUE
+                        (
+                            id_estudiante,
+                            fecha
+                        )
+                            )
+                        ''')
                            CREATE TABLE IF NOT EXISTS estudiantes
                            (
                                id_estudiante
@@ -169,6 +221,12 @@ class DatabaseManager:
         except sqlite3.Error as e:
             return [], f"Error obteniendo asistencias: {e}"
 
+    def limpiar_estudiantes(self):
+        try:
+            cursor = self.connection.cursor()
+
+            cursor.execute("DELETE FROM asistencias")
+
     # === AGREGAR ESTE MÉTODO AQUÍ ===
     def limpiar_estudiantes(self):
         """Elimina todos los estudiantes de la base de datos"""
@@ -185,6 +243,28 @@ class DatabaseManager:
             return True, "Estudiantes y asistencias eliminados correctamente"
         except sqlite3.Error as e:
             return False, f"Error al limpiar estudiantes: {str(e)}"
+
+
+    def eliminar_estudiante(self, id_estudiante):
+        try:
+            cursor = self.connection.cursor()
+
+
+            cursor.execute("DELETE FROM asistencias WHERE id_estudiante = ?", (id_estudiante,))
+
+
+            cursor.execute("DELETE FROM estudiantes WHERE id_estudiante = ?", (id_estudiante,))
+
+            self.connection.commit()
+
+            
+            if cursor.rowcount > 0:
+                return True, f"Estudiante {id_estudiante} eliminado correctamente"
+            else:
+                return False, f"No se encontró el estudiante con ID: {id_estudiante}"
+
+        except sqlite3.Error as e:
+            return False, f"Error eliminando estudiante: {str(e)}"
 
     def close(self):
         if self.connection:
