@@ -1,8 +1,6 @@
-Sistema de Registro de Asistencia Estudiantil
-📋 Descripción del Proyecto
+Sistema de Registro de Asistencia Estudiantil:
 Sistema de gestión de asistencia estudiantil desarrollado en Python con interfaz gráfica Tkinter que permite registrar, consultar y generar reportes de asistencia de estudiantes de manera eficiente.
 
-🎯 Objetivos
 Objetivo General
 Diseñar e implementar una aplicación de escritorio en Python que permita registrar, consultar 
 y generar reportes de asistencia estudiantil, garantizando la persistencia de datos y la facilidad 
