@@ -203,5 +203,3 @@ Push a la rama (git push origin feature/nuevaFuncionalidad)
 
 Crear Pull Request
 Contactar al equipo de desarrollo
-
-Desarrollado como parte del Curso de Lenguajes de Programación 🎓
