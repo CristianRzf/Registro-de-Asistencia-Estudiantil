@@ -1,6 +1,5 @@
 from datetime import datetime, date
 from servicios.database import DatabaseManager
-
 class GeneradorReportes:
     def __init__(self, db_manager):
         self.db_manager = db_manager

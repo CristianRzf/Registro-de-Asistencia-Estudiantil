@@ -75,6 +75,58 @@ class DatabaseManager:
                         )
                             )
                         ''')
+                           CREATE TABLE IF NOT EXISTS estudiantes
+                           (
+                               id_estudiante
+                               TEXT
+                               PRIMARY
+                               KEY,
+                               nombre
+                               TEXT
+                               NOT
+                               NULL,
+                               apellido
+                               TEXT
+                               NOT
+                               NULL
+                           )
+                           ''')
+
+            cursor.execute('''
+                           CREATE TABLE IF NOT EXISTS asistencias
+                           (
+                               id
+                               INTEGER
+                               PRIMARY
+                               KEY
+                               AUTOINCREMENT,
+                               id_estudiante
+                               TEXT
+                               NOT
+                               NULL,
+                               fecha
+                               TEXT
+                               NOT
+                               NULL,
+                               estado
+                               TEXT
+                               NOT
+                               NULL,
+                               FOREIGN
+                               KEY
+                           (
+                               id_estudiante
+                           ) REFERENCES estudantes
+                           (
+                               id_estudiante
+                           ),
+                               UNIQUE
+                           (
+                               id_estudiante,
+                               fecha
+                           )
+                               )
+                           ''')
 
             self.connection.commit()
             print("Tablas verificadas/creadas correctamente")
@@ -175,6 +227,16 @@ class DatabaseManager:
 
             cursor.execute("DELETE FROM asistencias")
 
+    # === AGREGAR ESTE MÉTODO AQUÍ ===
+    def limpiar_estudiantes(self):
+        """Elimina todos los estudiantes de la base de datos"""
+        try:
+            cursor = self.connection.cursor()
+
+            # Primero eliminamos las asistencias relacionadas (por la clave foránea)
+            cursor.execute("DELETE FROM asistencias")
+
+            # Luego eliminamos los estudiantes
             cursor.execute("DELETE FROM estudiantes")
 
             self.connection.commit()
