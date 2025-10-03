@@ -68,29 +68,27 @@ Estructura del Proyecto
 text
 asistencia-estudiantil/
 │
-├── main.py                 # Punto de entrada de la aplicación
-├── asistencia.db           # Base de datos SQLite (se crea automáticamente)
+├── main.py                 
+├── asistencia.db           
 │
-├── modelos/                # Modelos de datos
+├── modelos/               
 │   ├── __init__.py
-│   ├── estudiante.py       # Clase Estudiante
-│   └── asistencia.py       # Clase Asistencia
+│   ├── estudiante.py      
+│   └── asistencia.py       
 │
-├── servicios/              # Lógica de negocio y servicios
+├── servicios/              
 │   ├── __init__.py
-│   ├── database.py         # Gestión de base de datos
-│   └── reporters.py        # Generación de reportes
+│   ├── database.py         
+│   └── reporters.py        
 │
-├── ui/                     # Interfaz de usuario
+├── ui/                    
 │   ├── __init__.py
-│   └── main_window.py      # Ventana principal de la aplicación
+│   └── main_window.py      
 │
 ├── data/                   
-│   ├── estudiantes.csv     # Plantilla para carga de estudiantes
-│   └── asistencias.json    # Ejemplo de estructura de datos
-│
-└── docs/                   # Documentación
-    └── manual-usuario.pdf
+│   ├── estudiantes.csv     
+│   └── asistencias.json
+
     
 Uso de la Aplicación
 1. Carga Inicial de Estudiantes
@@ -189,7 +187,7 @@ Exportación a CSV
 
 Alertas de baja asistencia
 
-👥 Contribución
+Contribución:
 Equipo de Desarrollo
 Carlos Andres Cordoba Araujo
 Cristian Felipe Ruiz Arias
